@@ -28,19 +28,22 @@
          'height'				: 400,
          'opacity'				: 70,
          'id'					: 'popupBlock',
-         'onInterstitialClose' 	: function(){}
+         'fadeDuration' : "normal",
+         'onInterstitialClose' 	: function(){},
+         'onLoad'   : function(){}
     	};
     	
         var settings = $.extend({}, defaults, options);
 		
 		//Fade in Background
 		$('body').append('<div id="fade"></div>'); 
-		$('#fade').css({'filter' : 'alpha(opacity=' + settings.opacity + ')'}).fadeIn();
+		$('#fade').css({'filter' : 'alpha(opacity=' + settings.opacity + ')'}).fadeIn(settings.fadeDuration);
 
 		//Fade in the Popup
 		$('body').append('<div id="' + settings.id + '"></div>');
 		$('#' + settings.id).load(settings.url, function() {
-			$('#' + settings.id).css({'width' : Number(settings.width), 'height' : Number(settings.height)}).fadeIn();
+			$('#' + settings.id).css({'width' : Number(settings.width), 'height' : Number(settings.height)}).fadeIn(settings.fadeDuration);
+			settings.onLoad();
 		});
 		
 		//Define margin for center alignment (vertical + horizontal)
